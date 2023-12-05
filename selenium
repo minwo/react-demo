@@ -8,23 +8,37 @@ import os
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_experimental_option("detach", True)
 
+# 특정 문구
+text = "Hello, World!"
+text2 = "Hello, World!"
+
 # chromedriver
 # 압축해제한 웹드라이버의 경로와 파일명 지정
 driver = webdriver.Chrome()
 
-# Load Page
-# chrome을 띄워 네이버 블로그 페이지를 연다.
+# page 1 ---------------------------------------------------------------------------------------------------
 driver.get("https://hug.hunet.co.kr/login")
 
-time.sleep(2)
+# 제목 내용 입력
+driver.find_element(By.NAME, 'username').send_keys('902302')
+driver.find_element(By.NAME,'password').send_keys('hunetno1!')
+
+# 완료 버튼
+driver.find_element(By.CLASS_NAME, 'btn_login').click()
+
+time.sleep(5)
 
 # 현재 페이지의 URL 추출
 url = driver.current_url
 
 # 메모장에 URL 작성
 with open('output.txt', 'w') as f:
-    f.write(url)
+    f.write('\n' + url)
 
+# page 2 ---------------------------------------------------------------------------------------------------
+driver.get("https://hug.hunet.co.kr/login")
+
+# 로그인 입력
 driver.find_element(By.NAME, 'username').send_keys('902302')
 driver.find_element(By.NAME,'password').send_keys('hunetno1!')
 
