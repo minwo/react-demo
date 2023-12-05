@@ -1,0 +1,40 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+import time
+import os
+
+# 브라우저 꺼짐 방지 옵션
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_experimental_option("detach", True)
+
+# chromedriver
+# 압축해제한 웹드라이버의 경로와 파일명 지정
+driver = webdriver.Chrome()
+
+# Load Page
+# chrome을 띄워 네이버 블로그 페이지를 연다.
+driver.get("https://hug.hunet.co.kr/login")
+
+time.sleep(2)
+
+# 현재 페이지의 URL 추출
+url = driver.current_url
+
+# 메모장에 URL 작성
+with open('output.txt', 'w') as f:
+    f.write(url)
+
+driver.find_element(By.NAME, 'username').send_keys('902302')
+driver.find_element(By.NAME,'password').send_keys('hunetno1!')
+
+# 로그인 버튼을 누릅니다.
+driver.find_element(By.CLASS_NAME, 'btn_login').click()
+
+time.sleep(2)
+
+driver.get("https://naver.com")
+
+os.system(f"notepad {'output.txt'}")
+
+time.sleep(100000)
